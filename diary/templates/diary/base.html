@@ -1,0 +1,128 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{% block title %}Дневник{% endblock %}</title>
+
+    <!-- Bootstrap 5 -->
+    <link href="{% static 'css/bootstrap.min.css' %}" rel="stylesheet">
+    <!-- Bootstrap Icons -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
+    <!-- Пользовательские стили -->
+    <link href="{% static 'css/style.css' %}" rel="stylesheet">
+    <!-- Иконки -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.css">
+
+    <link rel="stylesheet" href="{% static 'css/save-button.css' %}">
+</head>
+<body class="bg-dark">
+<!-- Основная обёртка: две колонки -->
+<div class="container-fluid p-0">
+    <div class="row g-0" style="min-height:100vh;">
+        <!-- Левая колонка: 1/4 ширины -->
+        <aside class="col-12 col-md-3 col-lg-3 border-end bg-dark">
+            <!-- Хэдер боковой панели -->
+            <nav class="navbar navbar-expand navbar-dark bg-warning px-3" style="height: 56px;">
+                <div class="container-fluid">
+                    <a class="navbar-brand" href="{% url 'diary:diary_list' %}">
+                        <h5 class="mb-0">Дневники</h5>
+                    </a>
+                    <div class="ms-auto">
+                        <a class="btn btn-success btn-sm" href="{% url 'diary:create_diary' %}" role="button">
+                            <i class="bi bi-plus-lg"></i>
+                        </a>
+                    </div>
+                </div>
+            </nav>
+
+            <!-- Окно поиска -->
+            <div class="search-container mt-3 mb-3">
+                <form class="d-flex" method="get" action="{% url 'diary:home' %}">
+                    <div class="input-group">
+                        <input class="form-control form-control-sm"
+                               type="search"
+                               name="q"
+                               placeholder="Поиск дневников..."
+                               value="{{ request.GET.q|default:'' }}"
+                               aria-label="Search">
+                        {% if request.GET.q %}
+                        <div class="input-group-text bg-transparent border-0">
+                            <a href="{% url 'diary:home' %}"
+                               class="text-muted text-decoration-none p-2">
+                                <i class="bi bi-x-lg"></i>
+                            </a>
+                        </div>
+                        {% endif %}
+                        <button class="btn btn-outline-warning btn-sm" type="submit">
+                            <i class="bi bi-search"></i>
+                        </button>
+                    </div>
+                </form>
+            </div>
+            {% block sidebar %}
+            <div class="list-group list-group-flush">
+                {% for diary in diaries %}
+                <a href="{% url 'diary:diary_detail' diary.pk %}"
+                   class="list-group-item list-group-item-action bg-dark text-light border-secondary">
+                    <div class="d-flex w-100 justify-content-between">
+                        <h6 class="mb-1 text-truncate" style="max-width: 150px;" title="{{ diary.name }}">
+                            {{ diary.name|truncatechars:25 }}
+                        </h6>
+                        <small>{{ diary.created_at|date:"d.m.Y" }}</small>
+                    </div>
+                </a>
+                {% empty %}
+                <div class="p-3 text-light">
+                    <small>Нет дневников</small>
+                </div>
+                {% endfor %}
+            </div>
+            {% endblock %}
+        </aside>
+
+        <!-- Правая колонка: 3/4 ширины -->
+        <main class="col">
+            <!-- Хэдер основной области -->
+            <nav class="navbar navbar-expand navbar-dark bg-warning px-3" style="height: 56px;">
+                <div class="container-fluid">
+                    <a class="navbar-brand" href="{% url 'diary:home' %}">Главная</a>
+                    <div class="ms-auto">
+                        <div class="dropdown">
+                            <button class="btn btn-outline-light dropdown-toggle" data-bs-toggle="dropdown">
+                                <i class="bi bi-person-circle me-1"></i>
+                                {% if user.is_authenticated %}{{ user.username }}{% else %}Аккаунт{% endif %}
+                            </button>
+                            <ul class="dropdown-menu dropdown-menu-end">
+                                {% if user.is_authenticated %}
+                                <li class="dropdown-item p-0">
+                                    <form method="post" action="{% url 'users:logout' %}" class="d-inline">
+                                        {% csrf_token %}
+                                        <button type="submit" class="dropdown-item w-100 text-start">
+                                            Выйти
+                                        </button>
+                                    </form>
+                                </li>
+                                {% else %}
+                                <li><a class="dropdown-item" href="{% url 'users:login' %}">Войти</a></li>
+                                <li><a class="dropdown-item" href="{% url 'users:register' %}">Регистрация</a></li>
+                                {% endif %}
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </nav>
+
+            <!-- Контент -->
+            <div class="p-4">
+                {% block content %}{% endblock %}
+            </div>
+        </main>
+    </div>
+</div>
+
+<!-- Bootstrap JS -->
+<script src="{% static 'js/bootstrap.bundle.min.js' %}"></script>
+</body>
+</html>

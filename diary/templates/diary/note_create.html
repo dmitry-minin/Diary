@@ -1,0 +1,26 @@
+{% extends 'diary/base.html' %}
+{% block title %}Создать заметку{% endblock %}
+{% block content %}
+<div class="container my-5">
+    <div class="row justify-content-center">
+        <div class="col-md-8">
+            <div class="card bg-warning text-dark p-4 rounded-3 shadow-lg">
+                <div class="text-center mb-4">
+                    <h1 class="h3 mb-3 fw-normal">Новая заметка</h1>
+                </div>
+                <form method="post" class="needs-validation" enctype="multipart/form-data">
+                    {% csrf_token %}
+                    {{ form.non_field_errors }}
+                    {{ form.as_p }}
+                    <button class="w-100 btn btn-dark text-white save-btn-hover" type="submit">
+                        Создать заметку
+                    </button>
+                </form>
+                <div class="mt-3 text-center">
+                    <a href="{% url 'diary:diary_detail' form.diary.value %}" class="btn btn-outline-dark">Назад</a>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

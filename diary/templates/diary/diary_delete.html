@@ -1,0 +1,24 @@
+{% extends 'diary/base.html' %}
+{% block title %}Удалить дневник{% endblock %}
+{% block content %}
+<div class="container my-5">
+    <div class="row justify-content-center">
+        <div class="col-md-6">
+            <div class="card bg-warning text-dark p-4 rounded-3 shadow-lg">
+                <div class="text-center mb-4">
+                    <h1 class="h3 mb-3 fw-normal">Удаление дневника</h1>
+                </div>
+                <p class="text-center">Вы уверены, что хотите удалить дневник "{{ object.name }}"?</p>
+                 <p class="text-center">Все заметки этого дневника также будут удалены</p>
+                <form method="post" class="needs-validation">
+                    {% csrf_token %}
+                    <div class="d-grid gap-2">
+                        <button type="submit" class="btn btn-danger">Да, удалить</button>
+                        <a href="{% url 'diary:diary_detail' object.pk %}" class="btn btn-outline-dark">Отмена</a>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}
