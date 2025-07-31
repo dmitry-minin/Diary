@@ -1,0 +1,49 @@
+{% extends 'diary/base.html' %}
+
+{% block title %}Главная{% endblock %}
+
+{% block sidebar %}
+{{ block.super }}
+{% endblock %}
+
+{% block content %}
+    {% if search_query %}
+        <h4 class="mb-4">Результаты поиска по запросу "{{ search_query }}"</h4>
+
+        {% if notes %}
+            <div class="search-results mb-4">
+                {% for note in notes %}
+                    <div class="card mb-2">
+                        <div class="card-body">
+                            <h5 class="card-title">
+                                <a href="{% url 'diary:diary_detail' note.diary.id %}">
+                                    {{ note.diary.title }}
+                                </a> /
+                                {{ note.title }}
+                            </h5>
+                            <p class="card-text">{{ note.content|truncatewords:30 }}</p>
+                            <a href="{% url 'diary:note_detail' note.id %}" class="btn btn-sm btn-outline-primary">
+                                Читать полностью
+                            </a>
+                        </div>
+                    </div>
+                {% endfor %}
+            </div>
+        {% else %}
+            <div class="alert alert-info">По вашему запросу ничего не найдено.</div>
+        {% endif %}
+    {% endif %}
+
+    <div class="row justify-content-center">
+        <div class="col-md-8">
+            <div class="card bg-warning text-dark p-4 rounded-3 shadow-lg">
+                <h2 class="mb-4">Новая запись</h2>
+                <form method="post">
+                    {% csrf_token %}
+                    {{ form.as_p }}
+                    <button type="submit" class="btn btn-dark">Создать запись</button>
+                </form>
+            </div>
+        </div>
+    </div>
+{% endblock %}

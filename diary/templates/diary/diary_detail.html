@@ -1,0 +1,86 @@
+{% extends 'diary/base.html' %}
+
+{% block title %}{{ diary.name }}{% endblock %}
+
+
+{% block content %}
+<div class="container my-4">
+    <!-- Diary Info Card -->
+    <div class="row justify-content-center mb-4">
+        <div class="col-md-8">
+            <div class="card bg-warning text-dark p-4 rounded-3 shadow-lg">
+                <div class="d-flex justify-content-between align-items-center mb-3">
+                    <h1 class="h4 mb-0">{{ diary.name }}</h1>
+                    <div>
+                        <a href="{% url 'diary:diary_update' diary.pk %}" class="btn btn-outline-dark btn-sm">
+                            <i class="bi bi-pencil"></i> Изменить
+                        </a>
+                        <a href="{% url 'diary:diary_delete' diary.pk %}" class="btn btn-outline-danger btn-sm">
+                            <i class="bi bi-trash"></i> Удалить
+                        </a>
+                    </div>
+                </div>
+
+                <div class="mb-3">
+                    <div class="text-muted small">
+                        <i class="bi bi-person"></i> {{ diary.user.username }} |
+                        <i class="bi bi-calendar-plus"></i> Создан: {{ diary.created_at|date:"d.m.Y H:i" }}
+                    </div>
+                </div>
+
+                {% if diary.description %}
+                <div class="mb-0">
+                    <h5>Описание:</h5>
+                    <p class="mb-0">{{ diary.description }}</p>
+                </div>
+                {% endif %}
+            </div>
+        </div>
+    </div>
+
+    <!-- Notes Section -->
+    <div class="row justify-content-center">
+        <div class="col-md-8">
+            <div class="d-flex justify-content-between align-items-center mb-3">
+                <h2 class="h5 text-light mb-0">Записи в дневнике</h2>
+                <a href="{% url 'diary:note_create' %}?diary={{ diary.pk }}"
+                   class="btn btn-warning btn-sm">
+                    <i class="bi bi-plus-lg"></i> Новая запись
+                </a>
+            </div>
+
+            {% if notes %}
+                {% for note in notes %}
+                <div class="card bg-warning text-dark mb-3">
+                    <div class="card-header d-flex justify-content-between align-items-center">
+                        <h5 class="mb-0">{{ note.title|default:"Без названия" }}</h5>
+                        <div>
+                            <span class="badge bg-dark text-white me-1">
+                                <i class="bi bi-calendar-event"></i>
+                                {{ note.event_date|date:"d.m.Y"|default:"Без даты" }}
+                            </span>
+                            <a href="{% url 'diary:note_detail' note.pk %}"
+                               class="btn btn-sm btn-outline-dark">
+                                <i class="bi bi-eye"></i>
+                            </a>
+                        </div>
+                    </div>
+                    <div class="card-body">
+                        <p class="card-text">{{ note.content|truncatewords:30 }}</p>
+                        <div class="text-end">
+                            <small class="text-muted">
+                                Создано: {{ note.created_at|date:"d.m.Y H:i" }}
+                            </small>
+                        </div>
+                    </div>
+                </div>
+                {% endfor %}
+            {% else %}
+                <div class="alert alert-warning">
+                    <i class="bi bi-info-circle"></i> В этом дневнике пока нет записей.
+                </div>
+            {% endif %}
+        </div>
+    </div>
+</div>
+{% endblock %}

@@ -1,0 +1,51 @@
+{% extends 'diary/base.html' %}
+{% block title %}{{ object.title }}{% endblock %}
+
+{% block sidebar %}
+{{ block.super }}
+{% endblock %}
+
+{% block content %}
+<div class="container my-5">
+    <div class="row justify-content-center">
+        <div class="col-md-8">
+            <div class="card bg-warning text-dark p-4 rounded-3 shadow-lg">
+                <div class="d-flex justify-content-between align-items-center mb-4">
+                    <h1 class="h3 mb-0">{{ object.title }}</h1>
+                    <div class="btn-group">
+                        <a href="{% url 'diary:note_update' object.pk %}" class="btn btn-outline-dark btn-sm">
+                            <i class="bi bi-pencil"></i> Редактировать
+                        </a>
+                        <a href="{% url 'diary:note_delete' object.pk %}" class="btn btn-outline-danger btn-sm">
+                            <i class="bi bi-trash"></i> Удалить
+                        </a>
+                    </div>
+                </div>
+
+                <div class="card-body">
+                    {% if object.event_date %}
+                    <p class="mb-2"><strong>Дата события:</strong> {{ object.event_date|date:"d.m.Y" }}</p>
+                    {% endif %}
+
+                    <p class="card-text">{{ object.content|linebreaks }}</p>
+                    
+                    {% if object.image %}
+                    <div class="mt-3">
+                        <img src="{{ object.image.url }}" alt="{{ object.title }}" class="img-fluid rounded">
+                    </div>
+                    {% endif %}
+                </div>
+
+                <div class="mt-4 border-top pt-3">
+                    <div class="d-flex justify-content-between align-items-center">
+                        <a href="{% url 'diary:diary_detail' object.diary.pk %}" class="text-dark">
+                            <i class="bi bi-arrow-left"></i> Назад к дневнику
+                        </a>
+                        <small class="text-muted">Создано: {{ object.created_at|date:"d.m.Y H:i" }}</small>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

@@ -1,0 +1,15 @@
+.save-btn-hover:hover {
+    background-color: #198754 !important;
+    border-color: #198754 !important;
+}
+
+/* Или еще более специфично */
+form .form-label {
+    font-weight: bold !important;
+    font-size: 1.1em !important;
+}
+
+form small.form-text {
+    font-size: 0.9em !important;
+    color: #6c757d !important;
+}

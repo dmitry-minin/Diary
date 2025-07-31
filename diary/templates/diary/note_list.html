@@ -1,0 +1,68 @@
+{% extends 'diary/base.html' %}
+{% block title %}Мои заметки{% endblock %}
+{% block content %}
+<div class="container my-5">
+    <div class="row justify-content-center">
+        <div class="col-md-10">
+            <div class="card bg-warning text-dark p-4 rounded-3 shadow-lg">
+                <div class="d-flex justify-content-between align-items-center mb-4">
+                    <h1 class="h3 mb-0">Мои заметки</h1>
+                    <a href="{% url 'diary:note_create' %}" class="btn btn-dark">
+                        <i class="bi bi-plus-circle"></i> Создать заметку
+                    </a>
+                </div>
+
+                {% if object_list %}
+                <div class="table-responsive">
+                    <table class="table table-hover">
+                        <thead>
+                            <tr>
+                                <th>Заголовок</th>
+                                <th>Дневник</th>
+                                <th>Дата события</th>
+                                <th>Дата создания</th>
+                                <th class="text-end">Действия</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {% for note in object_list %}
+                            <tr>
+                                <td>
+                                    <a href="{% url 'diary:note_detail' note.pk %}" class="text-dark text-decoration-none">
+                                        {{ note.title|truncatechars:30 }}
+                                    </a>
+                                </td>
+                                <td>
+                                    <a href="{% url 'diary:diary_detail' note.diary.pk %}" class="text-dark">
+                                        {{ note.diary.name|truncatechars:20 }}
+                                    </a>
+                                </td>
+                                <td>{{ note.event_date|date:"d.m.Y"|default:"-" }}</td>
+                                <td>{{ note.created_at|date:"d.m.Y" }}</td>
+                                <td class="text-end">
+                                    <div class="btn-group btn-group-sm">
+                                        <a href="{% url 'diary:note_update' note.pk %}" 
+                                           class="btn btn-outline-dark btn-sm">
+                                            <i class="bi bi-pencil"></i>
+                                        </a>
+                                        <a href="{% url 'diary:note_delete' note.pk %}" 
+                                           class="btn btn-outline-danger btn-sm">
+                                            <i class="bi bi-trash"></i>
+                                        </a>
+                                    </div>
+                                </td>
+                            </tr>
+                            {% endfor %}
+                        </tbody>
+                    </table>
+                </div>
+                {% else %}
+                <div class="alert alert-info">
+                    У вас пока нет заметок. <a href="{% url 'diary:note_create' %}" class="alert-link">Создайте первую</a>.
+                </div>
+                {% endif %}
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

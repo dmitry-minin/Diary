@@ -1,0 +1,140 @@
+/* Стили для хедеров */
+.navbar-brand, .navbar .h5 {
+    color: #000000 !important;
+    font-weight: 600;
+    transition: all 0.3s ease;
+    text-shadow: 0 1px 2px rgba(0, 0, 0, 0.2);
+}
+
+.navbar-brand:hover, .navbar .h5:hover {
+    color: #333333 !important;
+    text-shadow: 0 2px 4px rgba(0, 0, 0, 0.6);
+    transform: translateY(-1px);
+}
+
+/* Стиль для области аккаунта */
+.dropdown-toggle {
+    background-color: #000000 !important;
+    color: #ffffff !important;
+    border: none;
+    padding: 0.5rem 1rem;
+    transition: all 0.3s ease;
+    text-shadow: 0 1px 2px rgba(0, 0, 0, 0.2);
+}
+
+.dropdown-toggle:hover {
+    background-color: #333333 !important;
+    text-shadow: 0 2px 4px rgba(0, 0, 0, 0.6);
+    transform: translateY(-1px);
+}
+
+/* Стиль для кнопки "Дневники" */
+.navbar .h5 {
+    cursor: pointer;
+}
+
+/* Стиль разделителя */
+.col-lg-3.border-end {
+    border-right: 3px solid rgba(255, 255, 255, 0.1);
+}
+
+/* Стиль кнопки "+" */
+.btn-success {
+    transition: all 0.3s ease;
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.2);
+}
+
+.btn-success:hover {
+    background-color: #00a65a !important;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.3);
+    transform: translateY(-1px);
+}
+
+/* Стиль кнопки поиска */
+.btn-outline-warning {
+    color: #000000;
+    border-color: #000000;
+    transition: all 0.3s ease;
+}
+
+.btn-outline-warning:hover {
+    background-color: #000000;
+    color: #ffffff;
+    transform: translateY(-1px);
+}
+
+/* Стиль для меню аккаунта */
+.dropdown-menu {
+    border: none;
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.2);
+}
+
+.dropdown-item {
+    transition: all 0.3s ease;
+    padding: 0.75rem 1.5rem;
+}
+
+.dropdown-item:hover {
+    background-color: #000000 !important;
+    color: #ffffff !important;
+    text-shadow: 0 2px 4px rgba(0, 0, 0, 0.6);
+}
+
+/* Стиль для формы поиска */
+.input-group {
+    background-color: #ffffff;
+    border-radius: 0.5rem;
+}
+
+.form-control {
+    border: none;
+    background-color: transparent;
+    color: #000000;
+    padding: 0.75rem;
+}
+
+.form-control:focus {
+    box-shadow: none;
+    border-color: transparent;
+}
+
+.btn-outline-warning {
+    border-radius: 0 0.5rem 0.5rem 0;
+    padding: 0.75rem 1.5rem;
+}
+
+/* Стили для навигации */
+.navbar {
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.2);
+}
+
+.navbar:hover {
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.3);
+}
+
+/* Стиль для кнопки Сохранить */
+.card .btn-dark {
+    transition: all 0.3s ease;
+}
+
+.card .btn-dark:hover,
+.card .btn-dark:focus,
+.card .btn-dark:active {
+    background-color: #198754 !important;
+    border-color: #198754 !important;
+    transform: translateY(-1px);
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.3);
+}
+
+/* Более специфичный селектор */
+form.needs-validation .btn-dark:hover {
+    background-color: #198754 !important;
+    border-color: #198754 !important;
+}
+
+/* Самый приоритетный вариант */
+button[type="submit"].btn-dark:hover {
+    background-color: #198754 !important;
+    border-color: #198754 !important;
+}
+

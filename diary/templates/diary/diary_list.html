@@ -1,0 +1,58 @@
+{% extends 'diary/base.html' %}
+{% block title %}Мои дневники{% endblock %}
+
+{% block sidebar %}
+{{ block.super }}
+{% endblock %}
+
+{% block content %}
+<div class="container my-5">
+    <div class="row justify-content-center">
+        <div class="col-md-8">
+            <div class="card bg-warning text-dark p-4 rounded-3 shadow-lg">
+                <div class="d-flex justify-content-between align-items-center mb-4">
+                    <h1 class="h3 mb-0">Мои дневники</h1>
+                    <a href="{% url 'diary:create_diary' %}" class="btn btn-dark">
+                        <i class="bi bi-plus-circle"></i> Создать дневник
+                    </a>
+                </div>
+
+                {% if object_list %}
+                <div class="list-group">
+                    {% for diary in object_list %}
+                    <div class="list-group-item list-group-item-action">
+                        <div class="d-flex w-100 justify-content-between">
+                            <h5 class="mb-1">
+                                <a href="{% url 'diary:diary_detail' diary.pk %}" class="text-dark text-decoration-none">
+                                    {{ diary.name }}
+                                </a>
+                            </h5>
+                            <small>{{ diary.notes_set.count }} заметок</small>
+                        </div>
+                        <p class="mb-1">{{ diary.description|truncatechars:100|default:"Нет описания" }}</p>
+                        <div class="d-flex justify-content-between align-items-center">
+                            <small>Создан: {{ diary.created_at|date:"d.m.Y" }}</small>
+                            <div class="btn-group btn-group-sm">
+                                <a href="{% url 'diary:diary_update' diary.pk %}" 
+                                   class="btn btn-outline-dark btn-sm">
+                                    <i class="bi bi-pencil"></i>
+                                </a>
+                                <a href="{% url 'diary:diary_delete' diary.pk %}" 
+                                   class="btn btn-outline-danger btn-sm">
+                                    <i class="bi bi-trash"></i>
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                    {% endfor %}
+                </div>
+                {% else %}
+                <div class="alert alert-info">
+                    У вас пока нет дневников. <a href="{% url 'diary:create_diary' %}" class="alert-link">Создайте первый</a>.
+                </div>
+                {% endif %}
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}
