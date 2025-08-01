@@ -8,13 +8,17 @@ class RegistrationForm(UserCreationForm):
 
     class Meta:
         model = User
-        fields = ("username", "email", "password1", "password2")
+        fields = ("username", "email", "avatar", "password1", "password2")
         widgets = {
             'username': forms.TextInput(attrs={
                 'class': 'form-control bg-white text-dark',
                 'style': 'background-color: white !important;'
             }),
             'email': forms.EmailInput(attrs={
+                'class': 'form-control bg-white text-dark',
+                'style': 'background-color: white !important;'
+            }),
+            'avatar': forms.FileInput(attrs={
                 'class': 'form-control bg-white text-dark',
                 'style': 'background-color: white !important;'
             }),
